@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Game from "@/components/Game";
+import { Orbitron } from "next/font/google"; // NEW
+const orbitron = Orbitron({ subsets: ["latin"], weight: ["700"] }); // NEW
+
 
 export default function Page() {
   const [pendingScore, setPendingScore] = useState<number | null>(null);
@@ -47,15 +50,18 @@ export default function Page() {
       >
         {/* Title centered, a bit down from the very top */}
         <h1
+          className={orbitron.className}               // NEW
           style={{
             margin: 0,
             textAlign: "center",
             fontSize: 32,
-            letterSpacing: "0.06em"
+            letterSpacing: "0.06em",
+            color: "#00E5FF"                           // <- change to any hex you like
           }}
         >
           h3lo
         </h1>
+
 
         {/* X/Twitter icon in top-right */}
         <a
