@@ -36,10 +36,10 @@ export default function Game({ onGameOver }: { onGameOver: (score: number) => vo
     const MAX_GAP = 360;
 
 
-    // Late-game softening (kicks in after score >= 35)
+    // Late-game softening (kicks in after score >= 25)
     const LATE_SOFTEN_START = 25;
-    const LATE_CONT_ACCEL_MULT = 0.5;   // scales the per-frame accel
-    const LATE_STEP_MULT = 0.45;        // scales the per-obstacle step
+    const LATE_CONT_ACCEL_MULT = 0.25;   // scales the per-frame accel
+    const LATE_STEP_MULT = 0.1;        // scales the per-obstacle step
 
 
 
