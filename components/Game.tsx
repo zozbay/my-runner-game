@@ -36,6 +36,13 @@ export default function Game({ onGameOver }: { onGameOver: (score: number) => vo
     const MAX_GAP = 360;
 
 
+    // Late-game softening (kicks in after score >= 35)
+    const LATE_SOFTEN_START = 25;
+    const LATE_CONT_ACCEL_MULT = 0.5;   // scales the per-frame accel
+    const LATE_STEP_MULT = 0.45;        // scales the per-obstacle step
+
+
+
     // Obstacle width
     const OBSTACLE_WIDTH_MULT = 1.15; // try 1.05–1.3
 
@@ -48,8 +55,8 @@ export default function Game({ onGameOver }: { onGameOver: (score: number) => vo
     // Optional: shrink hitboxes slightly (1 = exact image bounds)
     const HITBOX_SHRINK = 1.0;
 
-    const gravity = 1.2;
-    const jump = -22;
+    const gravity = 1.5;
+    const jump = -26;
 
     ctx.font = "14px monospace";
     ctx.fillStyle = "white";
@@ -132,7 +139,10 @@ export default function Game({ onGameOver }: { onGameOver: (score: number) => vo
       // movement & difficulty ramp
       // A) per-frame accel OLD
       // speed = Math.min(MAX_SPEED, speed + CONTINUOUS_ACCEL);
-      speed += CONTINUOUS_ACCEL;
+      // per-frame accel (flatten after threshold)
+      const late = score >= LATE_SOFTEN_START;
+      const contMult = late ? LATE_CONT_ACCEL_MULT : 1;
+      speed += CONTINUOUS_ACCEL * contMult;
       obstacleX -= speed;
 
       // respawn at right edge + gap (use current obstacle width)
@@ -140,7 +150,9 @@ export default function Game({ onGameOver }: { onGameOver: (score: number) => vo
         obstacleX = nextSpawnX();
         // B) extra boost after each obstacle OLD
         // speed = Math.min(MAX_SPEED, speed + SPEED_GAIN_PER_OBSTACLE); 
-        speed += SPEED_GAIN_PER_OBSTACLE;
+        // step up after each obstacle (also flattened late)
+        const stepMult = late ? LATE_STEP_MULT : 1;
+        speed += SPEED_GAIN_PER_OBSTACLE * stepMult;
         score += 1;
         obstacleIdx = pickRandom(obsImgs.length);
       }
