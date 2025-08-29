@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import Game from "@/components/Game";
-import { Orbitron } from "next/font/google"; // NEW
-const orbitron = Orbitron({ subsets: ["latin"], weight: ["700"] }); // NEW
 import localFont from "next/font/local";                   // NEW
 const gamer2 = localFont({                                  // NEW
-  src: "/fonts/gamer2.ttf",                                 // path under /public
+  src: "../public/fonts/gamer.ttf",                                 // path under /public
   display: "swap",
 });
 
