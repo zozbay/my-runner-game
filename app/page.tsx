@@ -57,7 +57,7 @@ export default function Page() {
           style={{
             margin: 0,
             textAlign: "center",
-            fontSize: 34,
+            fontSize: 38,
             letterSpacing: "0.06em",
             color: "#05f2c3"                           // <- change to any hex you like
           }}
