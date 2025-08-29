@@ -21,8 +21,9 @@ export default function Page() {
       setStatus("Saved!");
       setPendingScore(null);
       setName("");
-    } catch (e: any) {
-      setStatus(e.message);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Submit failed";
+      setStatus(msg);
     }
   }
 
